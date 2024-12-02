@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_client/template_client.dart';
-import 'package:template_flutter/task/task_list_controller.dart';
+import 'package:template_flutter/task/task_edit_controller.dart';
 
 class TaskEditPage extends ConsumerWidget {
   final Task task;
@@ -55,8 +55,8 @@ class TaskEditPage extends ConsumerWidget {
         ElevatedButton(
           onPressed: () async {
             await ref
-                .read(taskListControllerProvider.notifier)
-                .insertOrUpdate(task);
+                .read(TaskEditControllerProvider(task).notifier)
+                .insertOrUpdate();
             if (context.mounted) {
               Navigator.of(context).pop(true);
             }
