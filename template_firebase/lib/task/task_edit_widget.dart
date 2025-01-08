@@ -15,7 +15,7 @@ class TaskEditPage extends ConsumerWidget {
     print('Task');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task Edit'),
+        title: const Text('Task Edit'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,7 +24,7 @@ class TaskEditPage extends ConsumerWidget {
           children: [
             TextField(
               controller: TextEditingController(text: task.title),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Task title',
                 border: OutlineInputBorder(),
               ),
@@ -32,7 +32,7 @@ class TaskEditPage extends ConsumerWidget {
                 task = task.copyWith(title: value);
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildButtonBar(ref, context),
           ],
         ),
@@ -58,12 +58,12 @@ class TaskEditPage extends ConsumerWidget {
           },
           child: Text(task.id == null ? 'Create' : 'Save'),
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: Text('Cancel')),
+            child: const Text('Cancel')),
       ],
     );
   }
