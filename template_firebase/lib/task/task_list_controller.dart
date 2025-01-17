@@ -17,12 +17,13 @@ class TaskListController extends _$TaskListController {
   }
 
   Future<void> insertOrUpdate(Task task) async {
+    print('insertOrUpdate ${task.toJson()}');
     final taskRepository = ref.read(taskRepositoryProvider);
     state = const AsyncValue.loading();
     if (task.id == null) {
       await taskRepository.insert(task);
     } else {
-      await taskRepository.update(task);
+      await taskRepository.update(task.id!, task);
     }
     state = await AsyncValue.guard(taskRepository.find);
   }

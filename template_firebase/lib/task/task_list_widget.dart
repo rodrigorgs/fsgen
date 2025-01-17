@@ -33,10 +33,12 @@ class TaskListPage extends ConsumerWidget {
           },
           child: const Icon(Icons.add),
         ),
-        body: taskList.when(
-          data: (list) => _buildTaskList(ref, list),
-          error: _buildError,
-          loading: () => const CircularProgressIndicator(),
+        body: Center(
+          child: taskList.when(
+            data: (list) => _buildTaskList(ref, list),
+            error: _buildError,
+            loading: () => const CircularProgressIndicator(),
+          ),
         ));
   }
 
@@ -49,7 +51,13 @@ class TaskListPage extends ConsumerWidget {
         ),
       );
 
-  Widget? _buildTaskList(WidgetRef ref, List<Task> list) => ListView.builder(
+  Widget? _buildTaskList(WidgetRef ref, List<Task> list) {
+    if (list.isEmpty) {
+      return const Center(
+        child: Text('No tasks found'),
+      );
+    } else {
+      return ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
           Task task = list[index];
@@ -105,4 +113,6 @@ class TaskListPage extends ConsumerWidget {
           );
         },
       );
+    }
+  }
 }

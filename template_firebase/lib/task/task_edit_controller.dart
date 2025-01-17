@@ -19,7 +19,7 @@ class TaskEditController extends _$TaskEditController {
       task = await taskRepository.insert(task);
       // TODO: get task with id
     } else {
-      await taskRepository.update(task);
+      await taskRepository.update(task.id!, task);
     }
     state = await AsyncValue.guard(() => Future.value(task));
   }
