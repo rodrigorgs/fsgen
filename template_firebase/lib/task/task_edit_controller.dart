@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:template_firebase/task/task.dart';
-import 'package:template_firebase/task/task_service.dart';
+import 'package:template_firebase/task/task_repository.dart';
 
 part 'task_edit_controller.g.dart';
 
@@ -17,13 +17,13 @@ class TaskEditController extends _$TaskEditController {
     // print('state.value');
     // print(state.value?.toMap());
     Task task = state.value!;
-    final taskService = ref.read(taskServiceProvider);
+    final taskRepository = ref.read(taskRepositoryProvider);
     state = const AsyncValue.loading();
     if (task.id == null) {
-      task = await taskService.insert(task);
+      task = await taskRepository.insert(task);
       // TODO: get task with id
     } else {
-      await taskService.update(task);
+      await taskRepository.update(task);
     }
     state = await AsyncValue.guard(() => Future.value(task));
   }
