@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^5.5.0
   firebase_auth: ^5.3.3
   google_sign_in: ^6.2.2
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +59,8 @@ dev_dependencies:
   custom_lint: ^0.7.0
   riverpod_lint: ^2.6.3
   bdd_widget_test: ^1.7.4
+  freezed: ^2.5.7
+  json_serializable: ^6.9.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

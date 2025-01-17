@@ -8,14 +8,10 @@ part 'task_edit_controller.g.dart';
 class TaskEditController extends _$TaskEditController {
   @override
   Future<Task> build(Task task) async {
-    print('build task');
-    print(task.toMap());
     return task;
   }
 
   Future<void> insertOrUpdate() async {
-    // print('state.value');
-    // print(state.value?.toMap());
     Task task = state.value!;
     final taskRepository = ref.read(taskRepositoryProvider);
     state = const AsyncValue.loading();

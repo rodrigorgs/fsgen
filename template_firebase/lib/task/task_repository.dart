@@ -14,21 +14,21 @@ class TaskRepository {
   Future<Task?> findById(int id) async {
     final snapshot =
         await _firestore.collection('tasks').doc(id.toString()).get();
-    return Task.fromDocument(snapshot);
+    return Task.fromJson(snapshot.data()!);
   }
 
   Future<List<Task>> find() async {
     final snapshot = await _firestore.collection('tasks').get();
-    return snapshot.docs.map((doc) => Task.fromDocument(doc)).toList();
+    return snapshot.docs.map((doc) => Task.fromJson(doc.data()!)).toList();
   }
 
   Future<Task> insert(Task task) async {
-    final docRef = await _firestore.collection('tasks').add(task.toMap());
+    final docRef = await _firestore.collection('tasks').add(task.toJson());
     return task.copyWith(id: docRef.id);
   }
 
   Future<void> update(Task task) async {
-    await _firestore.collection('tasks').doc(task.id).update(task.toMap());
+    await _firestore.collection('tasks').doc(task.id).update(task.toJson());
   }
 
   Future<void> delete(String id) async {
