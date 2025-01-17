@@ -19,7 +19,7 @@ class TaskRepository {
 
   Future<List<Task>> find() async {
     final snapshot = await _firestore.collection('tasks').get();
-    return snapshot.docs.map((doc) => Task.fromJson(doc.data()!)).toList();
+    return snapshot.docs.map((doc) => Task.fromJson(doc.data())).toList();
   }
 
   Future<Task> insert(Task task) async {

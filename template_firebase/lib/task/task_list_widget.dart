@@ -23,7 +23,7 @@ class TaskListPage extends ConsumerWidget {
             final saved = await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => TaskEditPage(
-                  task: Task(title: '', isCompleted: false),
+                  task: const Task(title: '', isCompleted: false),
                 ),
               ),
             );

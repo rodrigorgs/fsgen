@@ -12,7 +12,6 @@ class TaskEditPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('Task');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Task Edit'),
