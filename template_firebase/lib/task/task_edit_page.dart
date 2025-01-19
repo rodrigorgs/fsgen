@@ -100,18 +100,7 @@ class _TaskEditPageState extends ConsumerState<TaskEditPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: () async {
-            if (!_formKey.currentState!.validate()) {
-              return;
-            }
-            final notifier =
-                ref.read(taskEditControllerProvider(widget.taskId).notifier);
-            await notifier.updateState(task!);
-            await notifier.save();
-            if (context.mounted) {
-              Navigator.of(context).pop(true);
-            }
-          },
+          onPressed: _save,
           child: Text(isNewTask ? 'Create' : 'Save'),
         ),
         const SizedBox(width: 16),
@@ -122,5 +111,18 @@ class _TaskEditPageState extends ConsumerState<TaskEditPage> {
             child: const Text('Cancel')),
       ],
     );
+  }
+
+  void _save() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    final notifier =
+        ref.read(taskEditControllerProvider(widget.taskId).notifier);
+    await notifier.updateState(task!);
+    await notifier.save();
+    if (mounted) {
+      Navigator.of(context).pop(true);
+    }
   }
 }
