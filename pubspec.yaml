@@ -1,5 +1,5 @@
 name: fsgen
-description: Code generator for projects using Serverpod and Riverpod
+description: Code generator for projects using Serverpod or Firebase, together with Riverpod
 version: 1.0.0
 # repository: https://github.com/my_org/my_repo
 
