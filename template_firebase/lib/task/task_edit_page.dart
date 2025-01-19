@@ -14,6 +14,20 @@ class TaskEditPage extends ConsumerStatefulWidget {
 class _TaskEditPageState extends ConsumerState<TaskEditPage> {
   get isNewTask => widget.taskId == null;
   Task? task;
+  late final TextEditingController _titleController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +35,7 @@ class _TaskEditPageState extends ConsumerState<TaskEditPage> {
 
     if (task == null && taskAsync.hasValue) {
       task = taskAsync.value!.copyWith();
+      _titleController.text = task!.title;
     }
 
     return Scaffold(
@@ -29,50 +44,54 @@ class _TaskEditPageState extends ConsumerState<TaskEditPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: taskAsync.when(
-            data: (originalTask) => _buildForm(context),
-            error: (error, stackTrace) => Column(
-              children: [
-                Text('Error: $error'),
-                Text('Stack trace: $stackTrace'),
-              ],
-            ),
-            loading: () => const CircularProgressIndicator(),
-          ),
+        child: taskAsync.when(
+          data: (originalTask) => _buildForm(context),
+          error: (error, stackTrace) => Text('Error: $error'),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ),
       ),
     );
   }
 
-  Column _buildForm(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextField(
-          autofocus: true,
-          controller: TextEditingController(text: task!.title),
-          decoration: const InputDecoration(
-            labelText: 'Task title',
-            border: OutlineInputBorder(),
-          ),
-          onChanged: (value) {
-            task = task!.copyWith(title: value);
-          },
+  Widget _buildForm(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              autofocus: true,
+              controller: _titleController,
+              decoration: const InputDecoration(
+                labelText: 'Task title',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                task = task!.copyWith(title: value);
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a title';
+                }
+                return null;
+              },
+            ),
+            CheckboxListTile(
+              title: const Text('Is completed'),
+              value: task!.isCompleted,
+              controlAffinity: ListTileControlAffinity.leading,
+              onChanged: (value) {
+                setState(() {
+                  task = task!.copyWith(isCompleted: value!);
+                });
+              },
+            ),
+            const SizedBox(height: 16),
+            _buildButtonBar(ref, context),
+          ],
         ),
-        CheckboxListTile(
-          title: const Text('Is completed'),
-          value: task!.isCompleted,
-          controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (value) {
-            setState(() {
-              task = task!.copyWith(isCompleted: value!);
-            });
-          },
-        ),
-        const SizedBox(height: 16),
-        _buildButtonBar(ref, context),
-      ],
+      ),
     );
   }
 
@@ -82,6 +101,9 @@ class _TaskEditPageState extends ConsumerState<TaskEditPage> {
       children: [
         ElevatedButton(
           onPressed: () async {
+            if (!_formKey.currentState!.validate()) {
+              return;
+            }
             final notifier =
                 ref.read(taskEditControllerProvider(widget.taskId).notifier);
             await notifier.updateState(task!);
