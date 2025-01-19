@@ -22,22 +22,14 @@ void main(List<String> arguments) {
   transfomer.copyRebranded(File('${templateDirectory.path}/lib/main.dart'));
   transfomer.copyRebranded(
       File('${templateDirectory.path}/lib/firestore_provider.dart'));
-  // transfomer
-  //     .copyRebranded(File('${templateDirectory.path}/start-processes.sh'));
-  // transfomer
-  //     .copyRebranded(File('${templateDirectory.path}/.vscode/settings.json'));
-  // transfomer.copyRebranded(
-  //     File('${templateDirectory.path}/template_flutter/.gitignore'));
-
-  // chmod +x start-processes.sh
+  transfomer.copyRebranded(File('${templateDirectory.path}/.gitignore'));
+  transfomer
+      .copyRebranded(File('${templateDirectory.path}/.vscode/settings.json'));
 
   /////
 
   Directory.current = projectDirectory;
-  // Directory.current = '${projectName}_server';
-  // exec('serverpod', ['generate'], message: 'Generating Serverpod code...');
-  // Directory.current = projectDirectory;
-  // Directory.current = '${projectName}_flutter';
+
   exec(
       'flutter',
       [
@@ -59,9 +51,6 @@ void main(List<String> arguments) {
       ],
       message: 'Adding flutter dependencies...');
 
-  // exec('dart', ['run', 'build_runner', 'build'],
-  //     message: 'Generating Riverpod code...');
-
   print('Done.');
   print('Remember to configure Firebase:');
   print('');
@@ -69,4 +58,9 @@ void main(List<String> arguments) {
   print('  firebase login');
   print('  dart pub global activate flutterfire_cli');
   print('  flutterfire configure');
+  print('');
+  print('Also, keep the build_runner on while developing:');
+  print('');
+  print('  dart run build_runner watch');
+  print('');
 }
