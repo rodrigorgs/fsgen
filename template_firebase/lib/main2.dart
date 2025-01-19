@@ -9,10 +9,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,12 +22,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AuthenticationWrapper(),
+      home: const AuthenticationWrapper(),
     );
   }
 }
 
 class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
@@ -33,9 +37,9 @@ class AuthenticationWrapper extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           User? user = snapshot.data;
-          return user == null ? SignInPage() : ToDoListPage();
+          return user == null ? const SignInPage() : const ToDoListPage();
         }
-        return Scaffold(
+        return const Scaffold(
           body: Center(child: CircularProgressIndicator()),
         );
       },
@@ -44,6 +48,8 @@ class AuthenticationWrapper extends StatelessWidget {
 }
 
 class SignInPage extends StatelessWidget {
+  const SignInPage({super.key});
+
   Future<void> _signInWithGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -67,12 +73,12 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign In'),
+        title: const Text('Sign In'),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: _signInWithGoogle,
-          child: Text('Sign in with Google'),
+          child: const Text('Sign in with Google'),
         ),
       ),
     );
@@ -80,6 +86,8 @@ class SignInPage extends StatelessWidget {
 }
 
 class ToDoListPage extends StatefulWidget {
+  const ToDoListPage({super.key});
+
   @override
   _ToDoListPageState createState() => _ToDoListPageState();
 }
@@ -105,10 +113,10 @@ class _ToDoListPageState extends State<ToDoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('To-Do List'),
+        title: const Text('To-Do List'),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: _signOut,
           ),
         ],
@@ -122,11 +130,12 @@ class _ToDoListPageState extends State<ToDoListPage> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    decoration: InputDecoration(hintText: 'Enter a to-do item'),
+                    decoration:
+                        const InputDecoration(hintText: 'Enter a to-do item'),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.add),
+                  icon: const Icon(Icons.add),
                   onPressed: _addToDoItem,
                 ),
               ],
@@ -139,7 +148,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                 return ListTile(
                   title: Text(_todoItems[index]),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                     onPressed: () {
                       setState(() {
                         _todoItems.removeAt(index);
