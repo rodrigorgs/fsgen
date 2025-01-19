@@ -25,13 +25,14 @@ class Transformer {
     required this.modelName,
   });
 
+  String get templateName => templateDirectory.path.split('/').last;
   String get projectName => projectDirectory.path.split('/').last;
   String get modelNameCapitalized =>
       modelName[0].toUpperCase() + modelName.substring(1);
 
   String rebrand(String str) {
     return str
-        .replaceAll('template', projectName)
+        .replaceAll(templateName, projectName)
         .replaceAll('task', modelName)
         .replaceAll('Task', modelNameCapitalized);
   }
@@ -40,7 +41,7 @@ class Transformer {
     return file.absolute.path
         .replaceAll(
             templateDirectory.absolute.path, projectDirectory.absolute.path)
-        .replaceAll('template', projectName)
+        .replaceAll(templateName, projectName)
         .replaceAll('task', modelName);
   }
 
