@@ -7,17 +7,28 @@ part 'task_edit_controller.g.dart';
 @riverpod
 class TaskEditController extends _$TaskEditController {
   @override
-  Future<Task> build(Task task) async {
-    return task;
+  Future<Task> build(String? taskId) async {
+    if (taskId == null) {
+      return Future.value(Task.empty());
+    } else {
+      final task = await ref.read(taskRepositoryProvider).findById(taskId);
+      if (task == null) {
+        throw Exception('Task not found');
+      }
+      return task;
+    }
   }
 
-  Future<void> insertOrUpdate() async {
+  Future<void> updateState(Task task) async {
+    state = AsyncValue.data(task);
+  }
+
+  Future<void> save() async {
     Task task = state.value!;
     final taskRepository = ref.read(taskRepositoryProvider);
     state = const AsyncValue.loading();
     if (task.id == null) {
       task = await taskRepository.insert(task);
-      // TODO: get task with id
     } else {
       await taskRepository.update(task.id!, task);
     }

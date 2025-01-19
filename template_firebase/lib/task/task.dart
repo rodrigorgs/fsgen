@@ -12,9 +12,14 @@ class Task with _$Task {
     @Default(false) bool isCompleted,
   }) = _Task;
 
+  factory Task.empty() => const Task(
+        id: null,
+        title: '',
+      );
+
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
-  factory Task.fromFirestore(DocumentSnapshot doc) {
+  factory Task.fromDocument(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Task.fromJson(data).copyWith(id: doc.id);
   }

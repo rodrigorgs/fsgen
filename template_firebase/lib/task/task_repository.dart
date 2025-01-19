@@ -11,15 +11,14 @@ class TaskRepository {
 
   TaskRepository(this._firestore);
 
-  Future<Task?> findById(int id) async {
-    final snapshot =
-        await _firestore.collection('tasks').doc(id.toString()).get();
-    return Task.fromFirestore(snapshot);
+  Future<Task?> findById(String id) async {
+    final snapshot = await _firestore.collection('tasks').doc(id).get();
+    return Task.fromDocument(snapshot);
   }
 
   Future<List<Task>> find() async {
     final snapshot = await _firestore.collection('tasks').get();
-    return snapshot.docs.map((doc) => Task.fromFirestore(doc)).toList();
+    return snapshot.docs.map((doc) => Task.fromDocument(doc)).toList();
   }
 
   Future<Task> insert(Task task) async {

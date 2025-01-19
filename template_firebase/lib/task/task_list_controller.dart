@@ -16,18 +16,6 @@ class TaskListController extends _$TaskListController {
     state = await AsyncValue.guard(ref.read(taskRepositoryProvider).find);
   }
 
-  Future<void> insertOrUpdate(Task task) async {
-    print('insertOrUpdate ${task.toJson()}');
-    final taskRepository = ref.read(taskRepositoryProvider);
-    state = const AsyncValue.loading();
-    if (task.id == null) {
-      await taskRepository.insert(task);
-    } else {
-      await taskRepository.update(task.id!, task);
-    }
-    state = await AsyncValue.guard(taskRepository.find);
-  }
-
   Future<void> delete(Task task) async {
     final taskRepository = ref.read(taskRepositoryProvider);
     state = const AsyncValue.loading();

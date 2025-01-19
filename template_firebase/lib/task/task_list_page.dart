@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:template_firebase/task/task_edit_widget.dart';
+import 'package:template_firebase/task/task_edit_page.dart';
 import 'package:template_firebase/task/task_list_controller.dart';
 import 'package:template_firebase/task/task.dart';
 
@@ -15,31 +15,32 @@ class TaskListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final taskList = ref.watch(taskListControllerProvider);
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Task List'),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            final saved = await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => TaskEditPage(
-                  task: const Task(title: '', isCompleted: false),
-                ),
+      appBar: AppBar(
+        title: const Text('Task List'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final saved = await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const TaskEditPage(
+                taskId: null,
               ),
-            );
-            if (saved != false) {
-              _onUpdate(ref);
-            }
-          },
-          child: const Icon(Icons.add),
+            ),
+          );
+          if (saved == true) {
+            _onUpdate(ref);
+          }
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: Center(
+        child: taskList.when(
+          data: (list) => _buildTaskList(ref, list),
+          error: _buildError,
+          loading: () => const CircularProgressIndicator(),
         ),
-        body: Center(
-          child: taskList.when(
-            data: (list) => _buildTaskList(ref, list),
-            error: _buildError,
-            loading: () => const CircularProgressIndicator(),
-          ),
-        ));
+      ),
+    );
   }
 
   Widget? _buildError(error, stackTrace) => Center(
@@ -63,16 +64,7 @@ class TaskListPage extends ConsumerWidget {
           Task task = list[index];
           return ListTile(
             title: Text(task.title),
-            leading: Checkbox(
-              value: task.isCompleted,
-              onChanged: (value) {
-                // task.isCompleted = value!;
-                task = task.copyWith(isCompleted: value!);
-                ref
-                    .read(taskListControllerProvider.notifier)
-                    .insertOrUpdate(task);
-              },
-            ),
+            subtitle: Text(task.isCompleted ? 'Completed' : 'Not completed'),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
@@ -103,12 +95,15 @@ class TaskListPage extends ConsumerWidget {
                 );
               },
             ),
-            onTap: () {
-              Navigator.of(context).push(
+            onTap: () async {
+              final saved = await Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => TaskEditPage(task: task),
+                  builder: (context) => TaskEditPage(taskId: task.id),
                 ),
               );
+              if (saved == true) {
+                _onUpdate(ref);
+              }
             },
           );
         },
