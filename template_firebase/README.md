@@ -14,6 +14,8 @@ flutter pub add freezed_annotation
 flutter pub add dev:freezed
 flutter pub add json_annotation
 flutter pub add dev:json_serializable
+
+flutter pub add firebase_core cloud_firestore
 ```
 
 ## Firebase
@@ -22,6 +24,7 @@ flutter pub add dev:json_serializable
 curl -sL https://firebase.tools | bash
 firebase login
 dart pub global activate flutterfire_cli
+flutter pub add firebase_core cloud_firestore
 flutterfire configure
 ```
 
