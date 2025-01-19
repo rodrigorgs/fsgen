@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:template_firebase/firebase.dart';
+import 'package:template_firebase/firestore_provider.dart';
 import 'package:template_firebase/task/task.dart';
 
 part 'task_repository.g.dart';
