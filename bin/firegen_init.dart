@@ -1,14 +1,17 @@
 import 'dart:io';
+import 'dart:isolate';
 import 'package:path/path.dart' as p;
 import 'package:fsgen/transformer.dart';
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async {
   final projectDirectory = Directory.current;
   final projectName = p.basename(projectDirectory.path);
   final scriptDirectory = Directory(
       Platform.script.path.substring(0, Platform.script.path.lastIndexOf('/')));
-  final templateDirectory =
-      Directory('${scriptDirectory.parent.path}/template_firebase');
+
+  final packageUri = Uri.parse('package:fsgen/template_firebase');
+  final uri = await Isolate.resolvePackageUri(packageUri);
+  final templateDirectory = Directory.fromUri(uri!);
 
   print('script directory: ${scriptDirectory.path}');
   print('template directory: ${templateDirectory.path}');

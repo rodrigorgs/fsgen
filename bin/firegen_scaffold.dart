@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 import 'package:fsgen/transformer.dart';
 import 'package:glob/glob.dart';
 import 'package:glob/list_local_fs.dart';
@@ -25,7 +26,7 @@ class Generator {
   }
 }
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async {
   if (arguments.isEmpty) {
     print('Please provide a modelName.');
     return;
@@ -35,8 +36,13 @@ void main(List<String> arguments) {
   final projectDirectory = Directory.current;
   final scriptDirectory = Directory(
       Platform.script.path.substring(0, Platform.script.path.lastIndexOf('/')));
-  final templateDirectory =
-      Directory('${scriptDirectory.parent.path}/template_firebase');
+
+  final packageUri = Uri.parse('package:fsgen/template_firebase');
+  final uri = await Isolate.resolvePackageUri(packageUri);
+  final templateDirectory = Directory.fromUri(uri!);
+
+  // final templateDirectory =
+  //     Directory('${scriptDirectory.parent.path}/template_firebase');
 
   print('Project directory: $projectDirectory');
   print('Template directory: $templateDirectory');
