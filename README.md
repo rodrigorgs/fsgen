@@ -7,17 +7,23 @@ This repository contains two generators:
 
 ## Flutter + Firebase
 
-To use the generator, first create your Flutter project, e.g.:
+First, activate the generator:
+
+```sh
+dart pub global activate --source git https://github.com/rodrigorgs/fsgen
+```
+
+Then, create a new Flutter project:
 
 ```sh
 flutter create myapp
 ```
 
-Enter your project's folder and run the init command:
+Enter your project's folder and run the `firegen_init` command:
 
 ```sh
 cd myapp
-dart run firegen_init
+dart pub global run fsgen:firegen_init
 ```
 
 It will add dependencies and add/replace some files. Follow the instructions to configure your project with Firebase.
@@ -25,7 +31,7 @@ It will add dependencies and add/replace some files. Follow the instructions to 
 Then, create a scaffold, e.g.:
 
 ```sh
-dart run firegen_scaffold book
+dart pub global run fsgen:firegen_scaffold book
 ```
 
 It will create model, widgets, controllers, and repositories for the Book entity, under `lib/book`.
