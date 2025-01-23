@@ -22,12 +22,14 @@ class TaskRepository {
   }
 
   Future<Task> insert(Task task) async {
-    final docRef = await _firestore.collection('tasks').add(task.toJson());
+    final taskData = task.toJson()..remove('id');
+    final docRef = await _firestore.collection('tasks').add(taskData);
     return task.copyWith(id: docRef.id);
   }
 
   Future<void> update(String id, Task task) async {
-    await _firestore.collection('tasks').doc(task.id).update(task.toJson());
+    final taskData = task.toJson()..remove('id');
+    await _firestore.collection('tasks').doc(task.id).update(taskData);
   }
 
   Future<void> delete(String id) async {
