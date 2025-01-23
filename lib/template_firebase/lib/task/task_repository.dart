@@ -13,6 +13,9 @@ class TaskRepository {
 
   Future<Task?> findById(String id) async {
     final snapshot = await _firestore.collection('tasks').doc(id).get();
+    if (!snapshot.exists) {
+      return null;
+    }
     return Task.fromDocument(snapshot);
   }
 
