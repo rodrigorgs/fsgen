@@ -8,7 +8,7 @@ class TaskListPage extends ConsumerWidget {
   const TaskListPage({super.key});
 
   void _onUpdate(WidgetRef ref) {
-    ref.read(taskListControllerProvider.notifier).find();
+    ref.invalidate(taskListControllerProvider);
   }
 
   @override

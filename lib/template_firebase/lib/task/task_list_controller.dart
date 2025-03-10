@@ -8,18 +8,12 @@ part 'task_list_controller.g.dart';
 class TaskListController extends _$TaskListController {
   @override
   Future<List<Task>> build() async {
-    return ref.read(taskRepositoryProvider).find();
-  }
-
-  Future<void> find() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(ref.read(taskRepositoryProvider).find);
+    return ref.watch(taskRepositoryProvider).find();
   }
 
   Future<void> delete(Task task) async {
-    final taskRepository = ref.read(taskRepositoryProvider);
     state = const AsyncValue.loading();
-    await taskRepository.delete(task.id!);
-    state = await AsyncValue.guard(taskRepository.find);
+    await ref.read(taskRepositoryProvider).delete(task.id!);
+    ref.invalidateSelf();
   }
 }
