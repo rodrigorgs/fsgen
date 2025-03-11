@@ -28,7 +28,7 @@ dart pub global run fsgen:firegen_init
 
 It will add dependencies and add/replace some files.
 
-**Follow the instructions** to configure your project with Firebase.
+**Follow the instructions** in the command output to configure your project with Firebase.
 
 Then, create a scaffold, e.g.:
 
@@ -50,8 +50,12 @@ Edit `web/index.html`, adding the following tag inside `<head>`:
 
 More information about Google Sign In: https://pub.dev/packages/google_sign_in_web
 
+Run the `dart run build_runner build` command if you hadnt't run `build_runner watch` before.
+
 Finally, run your app:
 
 ```sh
 flutter run -d chrome --web-port 7357
 ```
+
+You may change `lib/main.dart` to show `BookListPage` instead of `MainPage`.
