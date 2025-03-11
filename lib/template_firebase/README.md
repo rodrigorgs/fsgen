@@ -32,5 +32,21 @@ flutterfire configure
 - Firestore Database -> Create database
 - Firestore Database -> Rules -> Start in test mode
 - Start a collection with a document > tasks
-- https://console.cloud.google.com/auth/overview/create
-- https://console.cloud.google.com/auth/clients/create
+
+## Authentication
+
+```sh
+flutter pub add firebase_auth google_sign_in
+```
+
+Access <https://console.cloud.google.com/>, choose a project, and create a new OAuth 2.0 client ID. Choose Web application, and add `http://localhost:7357` as an authorized JavaScript origin (replace `7357` by the port your application runs on). Copy the client ID.
+
+Edit `web/index.html`, adding the following tag inside `<head>`:
+
+```html
+<meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+```
+
+(Replace `YOUR_CLIENT_ID` by the client ID you copied).
+
+More information: https://pub.dev/packages/google_sign_in_web
