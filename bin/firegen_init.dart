@@ -54,6 +54,7 @@ void main(List<String> arguments) async {
         'firebase_core',
         'cloud_firestore',
         'google_sign_in',
+        'firebase_auth',
       ],
       message: 'Adding flutter dependencies...');
 

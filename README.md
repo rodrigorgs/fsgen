@@ -49,3 +49,9 @@ Edit `web/index.html`, adding the following tag inside `<head>`:
 (Replace `YOUR_CLIENT_ID` by the client ID you copied).
 
 More information about Google Sign In: https://pub.dev/packages/google_sign_in_web
+
+Finally, run your app:
+
+```sh
+flutter run -d chrome --web-port 7357
+```

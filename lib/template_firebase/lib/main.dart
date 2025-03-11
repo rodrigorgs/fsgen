@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_firebase/auth_provider.dart';
-import 'package:template_firebase/task/task_list_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -19,6 +18,19 @@ void main() async {
   );
 }
 
+class MainPage extends StatelessWidget {
+  const MainPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('Main page'),
+      ),
+    );
+  }
+}
+
 class AuthenticationWrapper extends ConsumerWidget {
   const AuthenticationWrapper({super.key});
 
@@ -28,8 +40,7 @@ class AuthenticationWrapper extends ConsumerWidget {
 
     return authStateAsync.when(
       data: (user) {
-        print('User: $user');
-        return user == null ? const SignInPage() : const TaskListPage();
+        return user == null ? const SignInPage() : const MainPage();
       },
       loading: () => const Scaffold(
         body: Center(child: CircularProgressIndicator()),
