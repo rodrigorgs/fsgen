@@ -38,7 +38,9 @@ dart pub global run fsgen:firegen_scaffold book
 
 It will create model, widgets, controllers, and repositories for the Book entity, under `lib/book`.
 
-Finally, configure Google Sign In. Access <https://console.cloud.google.com/>, choose a project, and create a new OAuth 2.0 client ID. Choose Web application, and add `http://localhost:7357` as an authorized JavaScript origin (replace `7357` by the port your application runs on). Copy the client ID.
+Finally, configure Google Sign In. Access <https://console.cloud.google.com/>, choose your project (or create a new one), and create a new OAuth 2.0 client ID. Choose Web application, and add `http://localhost:7357` as an authorized JavaScript origin (replace `7357` by the port your application runs on). Copy the client ID.
+
+Also, enable People API in the Google Cloud Console.
 
 Edit `web/index.html`, adding the following tag inside `<head>`:
 
