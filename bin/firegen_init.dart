@@ -25,6 +25,8 @@ void main(List<String> arguments) async {
   transfomer.copyRebranded(File('${templateDirectory.path}/lib/main.dart'));
   transfomer.copyRebranded(
       File('${templateDirectory.path}/lib/firestore_provider.dart'));
+  transfomer
+      .copyRebranded(File('${templateDirectory.path}/lib/auth_provider.dart'));
   transfomer.copyRebranded(File('${templateDirectory.path}/.gitignore'));
   transfomer
       .copyRebranded(File('${templateDirectory.path}/.vscode/settings.json'));
@@ -51,6 +53,7 @@ void main(List<String> arguments) async {
         'dev:json_serializable',
         'firebase_core',
         'cloud_firestore',
+        'google_sign_in',
       ],
       message: 'Adding flutter dependencies...');
 
