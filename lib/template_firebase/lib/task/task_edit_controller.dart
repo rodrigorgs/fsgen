@@ -24,9 +24,10 @@ class TaskEditController extends _$TaskEditController {
   }
 
   Future<void> save() async {
-    Task task = state.value!;
-    final taskRepository = ref.read(taskRepositoryProvider);
     state = const AsyncValue.loading();
+
+    Task task = await future;
+    final taskRepository = ref.read(taskRepositoryProvider);
     if (task.id == null) {
       task = await taskRepository.insert(task);
     } else {
