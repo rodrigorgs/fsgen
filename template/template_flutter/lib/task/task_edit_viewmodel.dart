@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:template_client/template_client.dart';
 import 'package:template_flutter/task/task_service.dart';
 
-part 'task_edit_controller.g.dart';
+part 'task_edit_viewmodel.g.dart';
 
 @riverpod
 class TaskEditController extends _$TaskEditController {

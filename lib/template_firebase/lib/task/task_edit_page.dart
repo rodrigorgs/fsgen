@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_firebase/task/task.dart';
-import 'package:template_firebase/task/task_edit_controller.dart';
+import 'package:template_firebase/task/task_edit_viewmodel.dart';
 
 class TaskEditPage extends ConsumerStatefulWidget {
   final String? taskId;
@@ -31,7 +31,7 @@ class _TaskEditPageState extends ConsumerState<TaskEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    final taskAsync = ref.watch(taskEditControllerProvider(widget.taskId));
+    final taskAsync = ref.watch(taskEditViewModelProvider(widget.taskId));
 
     if (task == null && taskAsync.hasValue) {
       task = taskAsync.value!.copyWith();
@@ -118,7 +118,7 @@ class _TaskEditPageState extends ConsumerState<TaskEditPage> {
       return;
     }
     final notifier =
-        ref.read(taskEditControllerProvider(widget.taskId).notifier);
+        ref.read(taskEditViewModelProvider(widget.taskId).notifier);
     await notifier.updateState(task!);
     await notifier.save();
     if (mounted) {

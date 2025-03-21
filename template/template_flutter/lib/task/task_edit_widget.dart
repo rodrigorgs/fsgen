@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_client/template_client.dart';
-import 'package:template_flutter/task/task_edit_controller.dart';
+import 'package:template_flutter/task/task_edit_viewmodel.dart';
 
 class TaskEditPage extends ConsumerWidget {
   final Task task;

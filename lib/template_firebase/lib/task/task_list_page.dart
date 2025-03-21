@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:template_firebase/task/task_edit_page.dart';
-import 'package:template_firebase/task/task_list_controller.dart';
+import 'package:template_firebase/task/task_list_viewmodel.dart';
 import 'package:template_firebase/task/task.dart';
 
 class TaskListPage extends ConsumerWidget {
   const TaskListPage({super.key});
 
   void _onUpdate(WidgetRef ref) {
-    ref.invalidate(taskListControllerProvider);
+    ref.invalidate(taskListViewModelProvider);
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final taskList = ref.watch(taskListControllerProvider);
+    final taskList = ref.watch(taskListViewModelProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Task List'),
@@ -85,7 +85,7 @@ class TaskListPage extends ConsumerWidget {
                         onPressed: () {
                           Navigator.of(context).pop();
                           ref
-                              .read(taskListControllerProvider.notifier)
+                              .read(taskListViewModelProvider.notifier)
                               .delete(task);
                         },
                         child: const Text('Delete'),

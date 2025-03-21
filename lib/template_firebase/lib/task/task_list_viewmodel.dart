@@ -2,10 +2,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:template_firebase/task/task.dart';
 import 'package:template_firebase/task/task_repository.dart';
 
-part 'task_list_controller.g.dart';
+part 'task_list_viewmodel.g.dart';
 
 @riverpod
-class TaskListController extends _$TaskListController {
+class TaskListViewModel extends _$TaskListViewModel {
   @override
   Future<List<Task>> build() async {
     return ref.watch(taskRepositoryProvider).find();

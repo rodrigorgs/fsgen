@@ -2,10 +2,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:template_firebase/task/task.dart';
 import 'package:template_firebase/task/task_repository.dart';
 
-part 'task_edit_controller.g.dart';
+part 'task_edit_viewmodel.g.dart';
 
 @riverpod
-class TaskEditController extends _$TaskEditController {
+class TaskEditViewModel extends _$TaskEditViewModel {
   @override
   Future<Task> build(String? taskId) async {
     if (taskId == null) {
