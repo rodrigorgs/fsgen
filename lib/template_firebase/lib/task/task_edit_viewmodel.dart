@@ -26,7 +26,7 @@ class TaskEditViewModel extends _$TaskEditViewModel {
   Future<void> save() async {
     state = const AsyncValue.loading();
 
-    Task task = await future;
+    Task task = state.requireValue;
     final taskRepository = ref.read(taskRepositoryProvider);
     if (task.id == null) {
       task = await taskRepository.insert(task);
