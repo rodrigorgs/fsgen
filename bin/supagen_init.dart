@@ -1,0 +1,64 @@
+import 'dart:io';
+import 'dart:isolate';
+import 'package:path/path.dart' as p;
+import 'package:fsgen/transformer.dart';
+
+void main(List<String> arguments) async {
+  final projectDirectory = Directory.current;
+  final projectName = p.basename(projectDirectory.path);
+  final scriptDirectory = Directory(
+      Platform.script.path.substring(0, Platform.script.path.lastIndexOf('/')));
+
+  final packageUri = Uri.parse('package:fsgen/template_supabase');
+  final uri = await Isolate.resolvePackageUri(packageUri);
+  final templateDirectory = Directory.fromUri(uri!);
+
+  print('script directory: ${scriptDirectory.path}');
+  print('template directory: ${templateDirectory.path}');
+  final transfomer = Transformer(
+      projectDirectory: projectDirectory,
+      templateDirectory: templateDirectory,
+      modelName: 'NNN');
+
+  ///////////////
+
+  transfomer.copyRebranded(File('${templateDirectory.path}/lib/main.dart'));
+  transfomer.copyRebranded(
+      File('${templateDirectory.path}/lib/supabase_provider.dart'));
+  transfomer
+      .copyRebranded(File('${templateDirectory.path}/lib/auth_provider.dart'));
+  transfomer.copyRebranded(File('${templateDirectory.path}/.gitignore'));
+  transfomer
+      .copyRebranded(File('${templateDirectory.path}/.vscode/settings.json'));
+
+  /////
+
+  Directory.current = projectDirectory;
+
+  exec(
+      'flutter',
+      [
+        'pub',
+        'add',
+        'flutter_riverpod',
+        'riverpod_annotation',
+        'dev:build_runner',
+        'dev:riverpod_generator',
+        'dev:custom_lint',
+        'dev:riverpod_lint',
+        'dev:bdd_widget_test',
+        'freezed_annotation',
+        'dev:freezed',
+        'json_annotation',
+        'dev:json_serializable',
+        'supabase_flutter',
+        'google_sign_in',
+      ],
+      message: 'Adding flutter dependencies...');
+
+  print('Done.');
+  print('Remember to keep the build_runner on while developing:');
+  print('');
+  print('  dart run build_runner watch');
+  print('');
+}
