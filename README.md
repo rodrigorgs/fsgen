@@ -54,6 +54,8 @@ In the file `lib/main.dart`, replace the placeholder widget with your generated 
 return TaskListPage();
 ```
 
+Also remember to add the proper imports.
+
 Run the code generator:
 
 ```sh
